@@ -19,13 +19,14 @@ Future<void> loadSdk() async {
 }
 
 // Expose the Onfido Web SDK API methods as Dart methods.
-@JS('onfidoInit')
+@JS()
+@anonymous
 class Onfido {
-  external static init({
-      String token,
-      String containerId,
-      Function onComplete,
-      List<String> steps});
+  external factory Onfido({
+    String token,
+    String containerId,
+    Function onComplete,
+    List<String> steps});
 
   external static void startFlow();
 }
