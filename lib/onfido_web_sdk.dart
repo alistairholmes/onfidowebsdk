@@ -19,22 +19,30 @@ Future<void> loadSdk() async {
   html.document.body?.children.add(script);
 }
 
+
+@JS('Onfido')
+@staticInterop
+class Onfido {
+  external static void init(Map options);
+}
+
 void start({
   required String token,
   required Function onComplete,
   required List<String> steps,
+  String containerId = '',
   bool useModal = false,
 }) {
-  Onfido().init(token, useModal, onComplete, steps);
-}
+  var options = {
+    'token': token,
+    'containerId': containerId,
+    'steps': steps.toString(),
+    'onComplete': onComplete,
+    'useModal': useModal,
+  };
 
+  var onfidoInit = allowInterop(Onfido.init);
+  onfidoInit(options);
 
-@JS()
-@staticInterop
-class Onfido {
-  external factory Onfido();
-}
-
-extension on Onfido {
-  external void init(String token, bool useModal, Function onComplete, List<String> steps);
+  // Onfido.init(token, '', useModal, onComplete, steps);
 }
