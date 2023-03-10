@@ -4,8 +4,10 @@
 @JS()
 library onfido_web_sdk;
 
-import 'package:js/js.dart';
+import 'dart:js_util';
 import 'dart:html' as html;
+
+import 'package:js/js.dart';
 
 export 'src/onfido_web_sdk_base.dart';
 
@@ -23,15 +25,6 @@ void closeOnfido() {
   mount?.remove();
 }
 
-@JS('Onfido')
-@staticInterop
-class Onfido {
-  external static dynamic init(dynamic);
-}
-
-@JS('console.log')
-external void log(dynamic str);
-
 void start({
   required String token,
   required Function onComplete,
@@ -46,9 +39,16 @@ void start({
     containerId: containerId,
     useModal: useModal,
     onComplete: allowInterop((data) {
-      onComplete(data);
+      var dartMap = dartify(data);
+      onComplete(dartMap);
     }),
   ));
+}
+
+@JS('Onfido')
+@staticInterop
+class Onfido {
+  external static dynamic init(dynamic);
 }
 
 @JS()
@@ -57,7 +57,7 @@ class Opts {
   external String token;
   external List<String> steps;
   external String containerId;
-  external Function onComplete;
+  external Function(Map) onComplete;
   external bool useModal;
 
   external factory Opts({
