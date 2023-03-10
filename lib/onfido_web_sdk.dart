@@ -11,17 +11,16 @@ export 'src/onfido_web_sdk_base.dart';
 
 // Load the Onfido Web SDK JavaScript file.
 Future<void> loadSdk() async {
-  html.DivElement newDiv = html.DivElement(); // create a new div element
-  newDiv.id = 'onfido-mount'; // set the ID of the new div to 'onfido-mount'
+  html.DivElement mount = html.DivElement(); // create a new div element
+  mount.id = 'onfido-mount'; // set the ID of the new div to 'onfido-mount'
 
-  final body = html.querySelector('body'); // select the body element of the page
-  body?.append(newDiv);
+  final body = html.querySelector('body') as html.BodyElement?; // select the body element of the page
+  body?.append(mount);
 }
 
 void closeOnfido() {
-  html.DivElement newDiv = html.DivElement(); // create a new div element
-  newDiv.id = 'onfido-mount';
-  newDiv.remove();
+  final mount = html.querySelector('#onfido-mount'); // create a new div element
+  mount?.remove();
 }
 
 @JS('Onfido')
