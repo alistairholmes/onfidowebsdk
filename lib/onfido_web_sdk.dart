@@ -5,17 +5,23 @@
 library onfido_web_sdk;
 
 import 'package:js/js.dart';
+import 'dart:html' as html;
 
 export 'src/onfido_web_sdk_base.dart';
 
 // Load the Onfido Web SDK JavaScript file.
 Future<void> loadSdk() async {
-  // final script = html.ScriptElement();
-  // script.src =
-  // 'https://assets.onfido.com/web-sdk-releases/12.0.0/onfido.min.js';
-  // script.async = true;
-  // script.defer = true;
-  // html.document.body?.children.add(script);
+  html.DivElement newDiv = html.DivElement(); // create a new div element
+  newDiv.id = 'onfido-mount'; // set the ID of the new div to 'onfido-mount'
+
+  final body = html.querySelector('body'); // select the body element of the page
+  body?.append(newDiv);
+}
+
+void closeOnfido() {
+  html.DivElement newDiv = html.DivElement(); // create a new div element
+  newDiv.id = 'onfido-mount';
+  newDiv.remove();
 }
 
 @JS('Onfido')
