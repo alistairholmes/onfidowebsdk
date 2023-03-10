@@ -34,32 +34,32 @@ void start({
   String containerId = 'onfido-mount',
   bool useModal = false,
 }) {
-  // log('starting onfido $options');
   final init = allowInterop(Onfido.init);
-  init({
+  init(Opts(
     token: token,
     steps: steps,
     containerId: containerId,
+    useModal: useModal,
     onComplete: allowInterop((data) {
-      log('ON COMPLETE! $data');
       onComplete(data);
     }),
-    useModal: useModal,
-  });
+  ));
 }
 
+@JS()
+@anonymous
 class Opts {
-  final String token;
-  final List<String> steps;
-  final String containerId;
-  final Function onComplete;
-  final bool useModal;
+  external String token;
+  external List<String> steps;
+  external String containerId;
+  external Function onComplete;
+  external bool useModal;
 
-  Opts({
-    required this.token,
-    required this.steps,
-    required this.onComplete,
-    this.containerId = 'onfido-mount',
-    this.useModal = false,
+  external factory Opts({
+    String token,
+    List<String> steps,
+    Function onComplete,
+    String containerId,
+    bool useModal,
   });
 }
