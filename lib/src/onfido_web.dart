@@ -8,18 +8,46 @@ import 'dart:html' as html;
 import 'package:js/js.dart';
 
 // Load the Onfido Web SDK JavaScript file.
-Future<void> loadSdk() async {
-  html.DivElement mount = html.DivElement(); // create a new div element
-  mount.id = 'onfido-mount'; // set the ID of the new div to 'onfido-mount'
+void loadSdk() {
+  _addHeadElements();
+  _addBodyElements();
+}
 
-  final body = html.querySelector('body')
-      as html.BodyElement?; // select the body element of the page
-  body?.append(mount);
+void _addHeadElements() {
+  html.LinkElement styleSheet = html.LinkElement();
+  styleSheet.id = 'onfido-styles';
+  styleSheet.href ='https://assets.onfido.com/web-sdk-releases/latest/style.css';
+  styleSheet.type = 'text/css';
+  styleSheet.rel = 'stylesheet';
+  html.document.head?.children.add(styleSheet);
+
+  html.StyleElement styleElement = html.StyleElement();
+  styleElement.text = 'html,body {height: 100%;margin: 0;} body,button {-webkit-font-smoothing: antialiased;}@media (min-width: 30em) {#onfido-mount {position: relative;top: 10%;}}';
+  styleElement.id = 'onfido-custom-style';
+  html.document.head?.children.add(styleElement);
+}
+
+void _addBodyElements() {
+  html.DivElement mount = html.DivElement();
+  mount.id = 'onfido-mount';
+  html.document.body?.children.add(mount);
+
+  html.ScriptElement onfidoJs = html.ScriptElement();
+  onfidoJs.id = 'onfido-js';
+  onfidoJs.src ='https://assets.onfido.com/web-sdk-releases/12.0.0/onfido.min.js';
+  html.document.head?.children.add(onfidoJs);
 }
 
 void closeOnfido() {
   final mount = html.querySelector('#onfido-mount'); // create a new div element
+  final styleSheet = html.querySelector('#onfido-styles');
+  final onfidoJs = html.querySelector('#onfido-js');
+  final customStyle = html.querySelector('#onfido-custom-style');
+
   mount?.remove();
+  styleSheet?.remove();
+  onfidoJs?.remove();
+  customStyle?.remove();
 }
 
 void start({

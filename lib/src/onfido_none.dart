@@ -1,4 +1,4 @@
-Future<void> loadSdk() async {}
+void loadSdk() {}
 void closeOnfido() {}
 void start({
   required String token,
