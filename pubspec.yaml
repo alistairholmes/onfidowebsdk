@@ -1,7 +1,7 @@
 name: onfido_web_sdk
-description: Custom Dart package for onfido sdk.
-version: 1.0.0
-# repository: https://github.com/my_org/my_repo
+description: Custom Dart package for using onfido sdk on Flutter Web.
+version: 2.0.0
+repository: https://github.com/alistairholmes/onfidowebsdk
 
 environment:
   sdk: '>=2.19.0 <3.0.0'
