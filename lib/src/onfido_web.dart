@@ -14,28 +14,30 @@ void loadSdk() {
 }
 
 void _addHeadElements() {
+  final head = html.querySelector('head') as html.HeadElement?;
   html.LinkElement styleSheet = html.LinkElement();
   styleSheet.id = 'onfido-styles';
   styleSheet.href ='https://assets.onfido.com/web-sdk-releases/latest/style.css';
   styleSheet.type = 'text/css';
   styleSheet.rel = 'stylesheet';
-  html.document.head?.children.add(styleSheet);
+  head?.append(styleSheet);
 
   html.StyleElement styleElement = html.StyleElement();
   styleElement.text = 'html,body {height: 100%;margin: 0;} body,button {-webkit-font-smoothing: antialiased;}@media (min-width: 30em) {#onfido-mount {position: relative;top: 10%;}}';
   styleElement.id = 'onfido-custom-style';
-  html.document.head?.children.add(styleElement);
+  head?.append(styleElement);
 }
 
 void _addBodyElements() {
+  final body = html.querySelector('body') as html.BodyElement?;
   html.DivElement mount = html.DivElement();
   mount.id = 'onfido-mount';
-  html.document.body?.children.add(mount);
+  body?.append(mount);
 
   html.ScriptElement onfidoJs = html.ScriptElement();
   onfidoJs.id = 'onfido-js';
   onfidoJs.src ='https://assets.onfido.com/web-sdk-releases/12.0.0/onfido.min.js';
-  html.document.head?.children.add(onfidoJs);
+  body?.append(onfidoJs);
 }
 
 void closeOnfido() {
