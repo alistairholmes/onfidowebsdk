@@ -11,29 +11,51 @@ and the Flutter guide for
 [developing packages and plugins](https://flutter.dev/developing-packages). 
 -->
 
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
+## Flutter and Dart: Onfido Integration
 
-## Features
+This code provides support for integrating the Onfido Web SDK into a Flutter app. The Onfido Web SDK is a JavaScript
+library that provides a way to integrate identity verification into an application.
 
-TODO: List what your package can do. Maybe include images, gifs, or videos.
+### Integration
+To integrate Onfido into your Flutter app, you will need to perform the following steps:
 
-## Getting started
+Import the necessary packages and libraries, including dart:js_util and dart:html.
 
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
-
-## Usage
-
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder. 
-
-```dart
-const like = 'sample';
+```
+import 'dart:js_util';
+import 'dart:html' as html;
 ```
 
-## Additional information
+Load the Onfido Web SDK JavaScript file by calling the loadSdk() function:
 
-TODO: Tell users more about the package: where to find more information, how to 
-contribute to the package, how to file issues, what response they can expect 
-from the package authors, and more.
+```
+loadSdk();
+```
+
+This function creates a new div element with the ID of 'onfido-mount' and appends it to the body of the HTML document.
+This is necessary for the Onfido Web SDK to work properly.
+
+Initialize the Onfido session by calling the `start()` function:
+
+```
+start(
+    token: 'YOUR_TOKEN_HERE',
+    onComplete: (data) {
+        // Handle completion of Onfido session here
+        print(data);
+    },
+    steps: ['document', 'face'],
+);
+```
+
+This function takes several parameters, including the Onfido token, a callback function to handle the completion of the
+session, and a list of steps that define the order in which the user will complete the identity verification process. In
+this example, the user will be prompted to upload a document and take a face photo.
+
+Remove the Onfido div element from the HTML document when the session is complete by calling the closeOnfido() function:
+
+```
+closeOnfido();
+```
+
+This function removes the div element with the ID of 'onfido-mount' from the HTML document.
